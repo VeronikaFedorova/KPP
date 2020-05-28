@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <p>
+      Гра "Бики і корови" - комп'ютер загадує число, яке Вам потрібно відгадати.
+      Бики означають цифри в правильній позиції, а корови - правильно відгадані
+      цифри, але в хибній позиції. Кількість спроб для вгадування числа - 15
+    </p>
+    >
+    <script>
+      var bulls, cows;
+
+      function RND(a, b) {
+        return Math.floor(Math.random() * (b - a + 1 + a));
+      }
+      function Num() {
+        var s = " ";
+        for (var i = 0; i < 4; i++) {
+          do var c = RND(0, 9);
+          while (s.indexOf(c) >= 0);
+          s = s + c;
+        }
+        return s;
+      }
+      function Analize(Num, attempt) {
+        bulls = 0;
+        cows = 0;
+        for (var i = 0; i < 4; i++) {
+          if (Num[i] == attempt[i]) {
+            bulls++;
+          } else if (Num.indexOf(attempt[i]) >= 0) cows++;
+        }
+      }
+      var n = Num();
+      for (var i = 0; i < 15; i++) {
+        var ask = prompt("Введіть число ");
+        if (ask.length > 4) {
+          document.write("Хибна кількість цифр! " );
+        }
+        Analize(n, ask);
+        var v = ask + " " + bulls + " бики " + cows + " корови ";
+        document.write(v + "<br>");
+        if (n == ask) {
+          alert("Ви виграли");
+          break;
+        }
+      }
+      document.write("Ви програли( " + "<br> " + "Загадане число " + n);
+    </script>
+  </body>
+</html>
