@@ -1,56 +1,49 @@
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Document</title>
-  </head>
-  <body>
-    <p>
-      Гра "Бики і корови" - комп'ютер загадує число, яке Вам потрібно відгадати.
-      Бики означають цифри в правильній позиції, а корови - правильно відгадані
-      цифри, але в хибній позиції. Кількість спроб для вгадування числа - 15
-    </p>
-    >
-    <script>
-      var bulls, cows;
+var random1 = Math.floor(Math.random() * 10);
+var random2 = Math.floor(Math.random() * 10);
+var random3 = Math.floor(Math.random() * 10);
+var random4 = Math.floor(Math.random() * 10);
 
-      function RND(a, b) {
-        return Math.floor(Math.random() * (b - a + 1 + a));
-      }
-      function Num() {
-        var s = " ";
-        for (var i = 0; i < 4; i++) {
-          do var c = RND(0, 9);
-          while (s.indexOf(c) >= 0);
-          s = s + c;
+while (random2 == random1) {
+    random2 = Math.floor(Math.random() * 10);
+}
+while (random3 == random2 || random3 == random1) {
+    random3 = Math.floor(Math.random() * 10);
+}
+while (random4 == random3 || random4 == random2 || random4 == random1) {
+    random4 = Math.floor(Math.random() * 10);
+}
+
+var arr = [random1, random2, random3, random4];//[7,2,4,1]
+console.log(arr);
+var guesses = 0;
+var cows = 0;
+var momentExit = false;
+while (momentExit == false) {
+    var data = prompt();
+    var newArr = [];
+    newArr = data;
+    if (newArr[0] == arr[0] || newArr[1] == arr[1] || newArr[2] == arr[2] || newArr[3] == arr[3]) {
+        var c1 = newArr[0] == arr[0];
+        var c2 = newArr[1] == arr[1];
+        var c3 = newArr[2] == arr[2];
+        var c4 = newArr[3] == arr[3];
+        var bulls = Number(c1 + c2 + c3 + c4);
+    }
+    var counter = 0;
+    for (var i = 0; i < 4; i++) {
+        if (arr[i] == newArr[0] || arr[i] == newArr[1] || arr[i] == newArr[2] || arr[i] == newArr[3]) {
+            var s = arr[i] == newArr[i];
+            if (s == false) {
+                cows++;
+            }
         }
-        return s;
-      }
-      function Analize(Num, attempt) {
-        bulls = 0;
-        cows = 0;
-        for (var i = 0; i < 4; i++) {
-          if (Num[i] == attempt[i]) {
-            bulls++;
-          } else if (Num.indexOf(attempt[i]) >= 0) cows++;
-        }
-      }
-      var n = Num();
-      for (var i = 0; i < 15; i++) {
-        var ask = prompt("Введіть число ");
-        if (ask.length > 4) {
-          document.write("Хибна кількість цифр! " );
-        }
-        Analize(n, ask);
-        var v = ask + " " + bulls + " бики " + cows + " корови ";
-        document.write(v + "<br>");
-        if (n == ask) {
-          alert("Ви виграли");
-          break;
-        }
-      }
-      document.write("Ви програли( " + "<br> " + "Загадане число " + n);
-    </script>
-  </body>
-</html>
+    }
+    guesses++;
+    console.log("Спроба:" + data);
+    console.log("Бики: " + bulls + ";" + " Корови: " + cows);
+    cows = 0;
+    if (bulls == arr.length) {
+        momentExit = true;
+        console.log("Це правильне число!" + " Спроб: " + guesses);
+    }
+}
